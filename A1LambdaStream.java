@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class A2LambdaStream {
+public class A1LambdaStream {
     public static void main(String[] args) {
         
         List<Integer> lista = Arrays.asList(1,2,3,4);
