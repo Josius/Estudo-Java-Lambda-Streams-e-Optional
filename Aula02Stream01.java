@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.List;
 
-public class A2Stream {
+public class Aula02Stream01 {
     public static void main(String[] args) {
 
         // Lista original não é modificada

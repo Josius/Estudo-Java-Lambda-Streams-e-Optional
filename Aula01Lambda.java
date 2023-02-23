@@ -1,5 +1,5 @@
 
-public class A1Lambda {
+public class Aula01Lambda {
 
     public static void main(String[] args) {
         
