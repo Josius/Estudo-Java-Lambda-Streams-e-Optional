@@ -32,7 +32,7 @@ Métodos/funções/operações finais (count, min, max, collect), os quais fecha
 * No EXEMPLO DE STREAM, ele pode receber um optional vazio que não imprimirá nada, caso contrário, imprime o 1º nº.
 
 ## Aula 04 - Reduce em Streams
-**Função do Reduce:** ele é uma função associativa, ou seja, agregar todos os elementos e retornar um único elemento com base na função de agregação.
+**Função do Reduce:** ele é uma função associativa, ou seja, agregar todos os elementos e retornar um único elemento com base na função de agregação. Reduce é voltado para trabalhar com valores/objetos imutáveis. Como no caso do exemplo de Concatenação, fazemos a construção da string usando a função .concat(). Logo, esse objeto é imutável, pois se tentarmos usar um StringBuilder neste caso, não conseguiremos, pois o StringBuilder é um objeto mutável. Neste caso, usamos o Collect ao invés do Reduce.
 &nbsp;
 
 **Estrutura:**
@@ -63,3 +63,17 @@ Métodos/funções/operações finais (count, min, max, collect), os quais fecha
 ### **Função de Combinação**
 * É a função que o Reduce chama quando ele divide em várias partes os elementos do Stream. Logo, se estivermos executando um Stream paralelo, o Stream pode ser quebrado em vários grupos, e o Reduce aplicará a função de acumulação nesses grupos, e depois aplicará a função de combinação entre esses grupos. Isso abre a possibilidade de executar algo mais perfomático.
 * Seguindo o exemplo **Combinação performática** apresentado no código, ele pega a lista de números, converte para String e concatena os nºs. Primeiro usa o Valor Identidade para String; na Função de Acumulação transforma os inteiros para String concatenando-os em grupos; na Função de Combinação concatenamos os grupos.
+
+## Aula 05 - Collect em Streams
+**Estrutura:**
+> `.collect(supplier, accumulator, combiner);`
+Com estrutura semelhante a Reduce, com diferença em relação ao 1º argumento, o supplier.
+
+### **Supplier**
+Função lambda que fornecerá a instância do objeto que queremos usar para acumular o resultado.
+
+### **Acumulator**
+Recebe dois argumentos, um é a própria lista gerada pelo supplier, o outro é um dos elementos do stream.
+
+### **Combiner**
+Ele pega as duas threads do Acumulator e gera a saída esperada.
