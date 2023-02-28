@@ -77,3 +77,34 @@ Recebe dois argumentos, um é a própria lista gerada pelo supplier, o outro é 
 
 ### **Combiner**
 Ele pega as duas threads do Acumulator e gera a saída esperada.
+
+## Aula 06 - Diferentes formas de escrever uma expressão Lambda
+### **Forma comum**
+> `.filter(n -> n % 2 == 0)`
+### **Quando usar parênteses**
+1º - Informar o tipo do parâmetro
+> `.filter((int n) -> n % 2 == 0)`
+
+2º - Com dois argumentos
+> `.reduce((n1, n2) -> n1 + n2)`
+
+3º - Informar o tipo do parâmetro e com dois argumentos
+> `.reduce((int n1, int n2) -> n1 + n2)`
+
+4º - Sem nenhum argumento
+> `Runnable runnable = () -> System.out.println("Hello there");`
+
+### **Quando usar chaves**
+1º - Se usar chaves na 2ª parte da expressão Lambda precisa usar *return* e *;*
+> `.filter((int n) -> {return n % 2 == 0;})`
+
+2º - Com chaves, podemos ter mais de uma linha na expressão Lambda
+
+```
+.filter((int n) -> {
+                    System.out.println("General Kenobi!");
+                    return n % 2 == 0;
+                })
+```
+
+## Aula 07 - Method Reference
