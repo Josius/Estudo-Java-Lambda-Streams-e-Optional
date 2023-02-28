@@ -108,3 +108,45 @@ Ele pega as duas threads do Acumulator e gera a saída esperada.
 ```
 
 ## Aula 07 - Method Reference
+Síntaxe não muito complicada e ajuda a poupar código quando vamos escrever funções Lambda.
+> `.forEach(System.out::println);`
+
+O method reference são os **_::_**
+
+### **Métodos estáticos**
+Forma Comum:
+> `.map((n) -> Método_Estático(n))`
+
+Síntaxe:
+> `.map(Nome_da_Classe_Que_Contém_O_Método_Estático::Método_Estático)`
+
+### **Construtores**
+Forma Comum:
+> `.map((n) -> new BigDecimal(n))`
+
+Síntaxe:
+> `.map(BigDecimal::new)`
+
+### **Várias Instâncias**
+Para cada n é chamada o doubleValue(), por isso, várias instâncias.
+
+Forma Comum:
+> `.map((n) -> n.doubleValue())`
+
+Síntaxe:
+> `.map(Integer::doubleValue)`
+
+### **Única Instância**
+Forma Comum:
+```
+BigDecimal dois = new BigDecimal(2);
+        list.stream()
+                .map(BigDecimal::new)
+                .map((b) -> dois.multiply(b))
+                .forEach(System.out::println);
+```
+
+Síntaxe:
+> `.map(dois::multiply)`
+
+
