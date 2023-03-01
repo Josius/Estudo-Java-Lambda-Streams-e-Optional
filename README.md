@@ -79,7 +79,7 @@ Recebe dois argumentos, um é a própria lista gerada pelo supplier, o outro é 
 Ele pega as duas threads do Acumulator e gera a saída esperada.
 
 ## Aula 06 - Diferentes formas de escrever uma expressão Lambda
-### **Forma comum**
+### **Forma padrão**
 > `.filter(n -> n % 2 == 0)`
 ### **Quando usar parênteses**
 1º - Informar o tipo do parâmetro
@@ -149,4 +149,52 @@ BigDecimal dois = new BigDecimal(2);
 Síntaxe:
 > `.map(dois::multiply)`
 
+## Aula 08 - Debug de Streams e funções Lambda
+### **Modo com chaves**
+A princípio, se depurarmos uma função Lambda, sendo que esta função esteja no modo padrão:
+> `.map((n) -> new StringBuilder().append(n).append("s").append("a"))`
 
+a depuração ficará confusa e não conseguiremos entender o passo a passo que ocorre. Neste caso, o ideal é usar a função em modo com chaves:
+
+```
+.map((n) -> {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(n);
+                    builder.append("s");
+                    builder.append("a");
+                    return builder;
+                })
+```
+Desta forma será possível verificar o passo a passo da depuração.
+
+### **Usando um método**
+Ao invés de criar um bloco de código com chaves e colocar toda a execução dentro da função Lambda, podemos criar um método com o código e simplesmente chamar o método na função:
+```
+    list.stream()
+                .map((n) -> {
+                    return converteParaStringBuilder(n);
+                })
+                .forEach(System.out::println);
+```
+
+```
+
+    private static StringBuilder converteParaStringBuilder(Integer n) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(n);
+        builder.append("a");
+        builder.append("s");
+        return builder;
+    }
+```
+### **Método Peek**
+Peek é um método que a interface Stream possui. Ele foi feito com o intuíto de ser utilizado para log e depuração, ao invés de executar uma tarefa mais complexa. Ele pode ser usando entre várias operações.
+```
+list.stream()
+                .peek(n -> System.out.println(n + " antes da alteração"))
+                .map((n) -> new StringBuilder().append(n).append("s").append("a"))
+                .peek(n -> System.out.println(n + " depois da alteração"))
+                .forEach(System.out::println);
+```
+
+Então, se tivermos um Stream com várias funções/operações (filter(), map(), etc.) podemos usar o peek entre cada uma dessas operações para saber o que ocorre.
