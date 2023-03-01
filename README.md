@@ -312,3 +312,38 @@ Semelhante a interface acima, mas recebe dois argumentos de um tipo e retorna um
 Por exemplo, o reduce:
 > `.reduce((e1, e2) -> e1 + e2)`
 
+## Aula 10 - Criação de Stream
+### **Collection**
+Qualquer classe que estenda ou implemente Collection terá o método stream e o método parallelStream.
+
+### **Arrays**
+Com arrays podemos usar o método stream da classe Arrays para gerar uma stream:
+> `Arrays.stream(arrayDeInteiros).forEach(System.out::println);`
+
+### **Stream.of**
+Criar um stream de qualquer tipo de objeto.
+> `Stream.of("Aenean egestas nunc fringilla rutrum dictum", "In hac habitasse platea dictumst").forEach(System.out::println);`
+
+### **IntStream.range e IntStream.rangeClosed**
+Cria um stream de números sequênciais. Ele recebe dois nºs como argumentos. O 1º é o número inicial inclusivo do stream. Já o 2º é o último nº do stream, o qual pode ser exclusivo, se usar o .range, ou inclusivo, se usar o .rangeClosed.
+
+### **Stream.iterate**
+Passamos dois argumentos para ele, um é o valor inicial chamado de seed, e o outro é uma transformação que será aplicada nesse valor inicial. 
+
+**NOTA:** Stream.iterate cria um stream infinito, logo, é imprescindível usar .limit().
+
+### **BufferedReader**
+BufferedReader é uma forma de ler arquivos em Java. Com o método .lines podemos ler as linhas de um arquivo como um stream.
+
+### **Files**
+Cria Stream, mas não com o conteúdo do arquivo, e sim com os arquivos que estão presentes num diretório.
+
+### **Random**
+Cria Stream de números aleatórios.
+**NOTA:** Random().ints() cria um stream infinito, logo, é imprescindível usar .limit().
+
+### **Pattern**
+Usado com expressões regulares (Regex), também pode ser usado para criar Stream.
+> `pattern.splitAsStream(string).forEach(System.out::println);`
+
+## Aula 11 - 
