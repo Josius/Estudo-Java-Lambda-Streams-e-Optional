@@ -198,3 +198,117 @@ list.stream()
 ```
 
 Então, se tivermos um Stream com várias funções/operações (filter(), map(), etc.) podemos usar o peek entre cada uma dessas operações para saber o que ocorre.
+
+## Aula 09 - Interfaces Funcionais
+### **Supplier**
+Interface funcional que não recebe nenhum argumento e entrega um valor.
+```
+@FunctionalInterface
+public interface Supplier<T> {
+
+    /**
+     * Gets a result.
+     *
+     * @return a result
+     */
+    T get();
+}
+```
+
+O seguinte código usa um generate, o qual usa um Supplier:
+```
+Stream.generate(() -> new Random().nextInt())
+                .limit(7)
+                .forEach(System.out::println);
+```
+
+### **Consumer**
+Interface funcional que recebe um argumento/valor mas não retorna nada, somente usa o argumento/valor. 
+```
+@FunctionalInterface
+public interface Consumer<T> {
+
+    /**
+     * Performs this operation on the given argument.
+     *
+     * @param t the input argument
+     */
+    void accept(T t);
+    ...
+```
+
+O forEach é um exemplo:
+> `.forEach((e) -> System.out.println(e));`
+
+### **BiConsumer**
+Semelhante a interface acima, mas com a diferença de que recebe dois argumentos e não retorna nada.
+
+### **Predicate**
+Interface funcional que recebe um valor e retorna um booleano, ou seja, retorna o resultado de uma comparação que resulte em true ou false.
+```
+@FunctionalInterface
+public interface Predicate<T> {
+
+    /**
+     * Evaluates this predicate on the given argument.
+     *
+     * @param t the input argument
+     * @return {@code true} if the input argument matches the predicate,
+     * otherwise {@code false}
+     */
+    boolean test(T t);
+    ...
+```
+
+Por exemplo:
+> `.filter(e -> e % 2 == 0)`
+
+### **BiPredicate**
+Semelhante a interface acima, mas recebe dois valores e faz um teste com esses dois valores.
+
+### **Function**
+Interface funcional que recebe um valor de um tipo e retorna um valor de outro tipo.
+```
+@FunctionalInterface
+public interface Function<T, R> {
+
+    /**
+     * Applies this function to the given argument.
+     *
+     * @param t the function argument
+     * @return the function result
+     */
+    R apply(T t);
+    ...
+```
+
+Por exemplo, o map:
+> `.map(e -> e.doubleValue())`
+
+### **BiFunction**
+Semelhante a interface acima, mas recebe dois valores e retorna um valor.
+
+### **UnaryOperator**
+Interface que extende a uma Function, semelhante a ela inclusive, entretanto, ao invés de receber um valor de um tipo e retornar outro valor de outro tipo, UnaryOperator recebe um valor de um tipo e retorna um outro valor do mesmo tipo. Ou seja, a entrada e a saída são do mesmo tipo.
+
+```
+@FunctionalInterface
+public interface UnaryOperator<T> extends Function<T, T> {
+
+    /**
+     * Returns a unary operator that always returns its input argument.
+     *
+     * @param <T> the type of the input and output of the operator
+     * @return a unary operator that always returns its input argument
+     */
+    static <T> UnaryOperator<T> identity() {
+        return t -> t;
+    }
+}
+```
+
+### **BinaryOperator**
+Semelhante a interface acima, mas recebe dois argumentos de um tipo e retorna um valor do mesmo tipo que os dois argumentos de entrada. BinaryOperator extende a uma BiFunction.
+Por exemplo, o reduce:
+> `.reduce((e1, e2) -> e1 + e2)`
+
