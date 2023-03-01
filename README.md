@@ -346,4 +346,29 @@ Cria Stream de números aleatórios.
 Usado com expressões regulares (Regex), também pode ser usado para criar Stream.
 > `pattern.splitAsStream(string).forEach(System.out::println);`
 
-## Aula 11 - 
+## Aula 11 - Manipulando Collections com expressões Lambda
+Alguns métodos de Collections podem receber expressões Lambda para facilitar seu uso.
+## **Exemplos com List**
+### **forEach**
+Executa a mesma função como se estivesse em um Stream. Usável em qualquer classe que implemente a interface **_Iterable_**.
+### **removeIf**
+Remove elementos com base em uma expressão Lambda. Usável em qualquer classe que implemente a interface **_Collection_**.
+### **replaceAll**
+Altera vários elementos, recebendo um elemento e retornando outro elemento, o qual substituirá o 1º elemento. Usável em qualquer classe que implemente a interface **_List_**.
+
+## **Exemplos com Map**
+### **compute**
+Operação que será executada em algum elemento do map. Se passarmos uma key que não está no mapa, ele acrescentará ela e como value colocará null + a alteração. Pode-se usar o compute dentro do forEach, como no código. Mas isso não é necessário, pois temos o replaceAll, descrito mais abaixo.
+### **forEach**
+Semelhante ao forEach, mas ao invés de usarmos a interface Consumer, usamos a BiConsumer, pois ele recebe dois elementos, no caso, a Key e o Value do Map.
+### **merge**
+Recebe 3 argumentos: key, value e  remappingFunction. Em remappingFunction usa-se uma função Lambda com dois argumentos, o 1º argumento é o valor que já está no map com referencia a key e o 2º argumento é referente ao value passado para o merge. Síntaxe:
+> `map.merge(key, value, (1º argumento, 2º argumento) -> o que fazer com os dois argumentos);`
+
+Exemplo:
+> `map.merge(3, "***", (v1, v2) -> v1 + v2);`
+
+Se passarmos uma key que não está no mapa, ele acrescentará ela e como value colocará o value do merge.
+### **replaceAll**
+Recebe key e value, indica o que alterar. No exemplo abaixo, não fizemos nada com a key, mas se necessário, poderíamos alterar também:
+> `map.replaceAll((k, v) -> v + "%$%$%$%$%");`
