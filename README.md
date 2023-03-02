@@ -372,3 +372,47 @@ Se passarmos uma key que não está no mapa, ele acrescentará ela e como value 
 ### **replaceAll**
 Recebe key e value, indica o que alterar. No exemplo abaixo, não fizemos nada com a key, mas se necessário, poderíamos alterar também:
 > `map.replaceAll((k, v) -> v + "%$%$%$%$%");`
+
+## Aula 12 - Streams Paralelos
+Quando usamos List, podemos usar .parallelStream() para termos um stream paralelo. Para algo que não é uma List mas é um Stream, temos o .parallel(), o qual irá transformar em paralelo.
+### **.parallel()**
+> `IntStream.range(0, 5).parallel()`
+### **.parallelStream()**
+> `list.parallelStream()`
+### **Quando usar stream paralelo?**
+- Stream paralelo tem um custo a mais que um stream sequêncial
+- Geralmente usamos o stream sequêncial do que o stream paralelo
+- Usamos o stream paralelo quando precisamos ganhar performance no algoritmo
+- No processo de milhares ou milhões de registros, menos que isso, pode ocorrer de perdermos performance sobre o algoritmo
+### **forEach e forEachOrdered**
+Quando usamos um stream paralelo, se usarmos um forEach, por exemplo, com um println, a ordem dos elementos de saída, não será ordenada. Já com um forEachOrdered, a saída será ordenada.
+### **findAny**
+- Ele pega qualquer elemento da stream e a finaliza (é uma operação final)
+- Retorna um Optional
+- Método do Optional que é retornado pelo findAny()
+- Quando estamos usando um stream paralelo, são várias threads executando ao mesmo tempo, e o findAny vai encontrar o 1º elemento que estiver pronto e fazer algo com ele
+- Já em um stream sequêncial, temos somente uma thread tratando da execução, com isso, o 1º elemento que a thread tratar o findAny pegará esse 1º elemento e fará algo com ele
+### **unordered: skip, limit, distinct**
+- Extremamente importante para streams paralelos
+- Usamos um dos três métodos:
+    - skip - descarta os n 1ºs elementos do stream (não do stream paralelo)
+    - limit - limita o nº de elementos processados (não do stream paralelo)
+    - distinct - retorna nºs não repetidos
+- Então, com skip e limit em um stream paralelo, os mesmo não respeitarão o retorno de cada thread sendo executada em paralelo. Para corrigir isso, usamos o **_unordered_**
+- unordered - fala que o skip pode pular qualquer elemento, no caso, o elemento que retornar 1º pelo stream paralelo, e o limit pode usar quaisquer n elementos que retornarem pelo stream paralelo. Ou seja, garante que o limit e o skip não sejam aplicados a uma thread específica. E tudo isso vale também para o distinct.
+### **reduce: acumuladores associativos**
+- Usamos operações associativas (multiplicação e soma)
+- Usamos stream paralelo com reduce pois o resultado será o mesmo
+- Se usarmos operações dissociativas (subtração e divisão), o resultado será diferente com reduce
+### **collect: toMap, toConcurrentMap**
+- Quando usamos toMap com stream paralelo, o stream tem que criar para cada thread um map, cada thread criará um novo map, vai popular com o resultado da operação, e por fim faz um merge dos maps criados.
+- É uma operação custosa
+- Ideal neste caso é usar o toConcurrentMap, que irá criar um único map que será acessado por todas as threads criadas
+- HashMap não é thread safe - ou seja, ele não suporta várias threads tentando fazer put nele ao mesmo tempo, já toConcurrentMap sim
+- Retorna desordenado os elementos
+### **collect: groupingBy**
+- Agrupa elementos com base em alguma operação
+- Sofre do mesmo problema que o toMap
+- Se houver várias threads tratando do map, cada thread criará um map e no final, juntará todos os maps em um
+- Ideal é usar groupingByConcurrent, pois garante que somente um map será criado e todas as threads estão fazendo put para esse único map
+- Retorna desordenado os elementos
