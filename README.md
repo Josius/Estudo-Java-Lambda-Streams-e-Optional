@@ -1,6 +1,6 @@
 # Estudos-Java-Lambda-Streams-e-Optional
 
-Fonte: https://www.youtube.com/playlist?list=PLuYctAHjg89ZkhgOQo0zcTtmHY5nuRYud
+## **Fonte de estudos: https://www.youtube.com/playlist?list=PLuYctAHjg89ZkhgOQo0zcTtmHY5nuRYud**
 
 ## Aula 01 
 Explicação sobre o conceito de Lambda, SAM - Single Abstract Method e uma pequena introdução a Stream.
