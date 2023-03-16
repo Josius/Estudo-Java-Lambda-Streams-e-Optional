@@ -1,6 +1,6 @@
 # Estudos-Java-Lambda-Streams-e-Optional
 
-## **Fonte de estudos: https://www.youtube.com/playlist?list=PLuYctAHjg89ZkhgOQo0zcTtmHY5nuRYud**
+## **Fonte de estudos: [RinaldoDev - Lambda, Streams e Optional](https://www.youtube.com/playlist?list=PLuYctAHjg89ZkhgOQo0zcTtmHY5nuRYud)**
 
 ## Aula 01 
 Explicação sobre o conceito de Lambda, SAM - Single Abstract Method e uma pequena introdução a Stream.
@@ -138,7 +138,7 @@ Síntaxe:
 
 ### **Única Instância**
 Forma Comum:
-```
+```java
 BigDecimal dois = new BigDecimal(2);
         list.stream()
                 .map(BigDecimal::new)
@@ -156,7 +156,7 @@ A princípio, se depurarmos uma função Lambda, sendo que esta função esteja 
 
 a depuração ficará confusa e não conseguiremos entender o passo a passo que ocorre. Neste caso, o ideal é usar a função em modo com chaves:
 
-```
+```java
 .map((n) -> {
                     StringBuilder builder = new StringBuilder();
                     builder.append(n);
@@ -169,7 +169,7 @@ Desta forma será possível verificar o passo a passo da depuração.
 
 ### **Usando um método**
 Ao invés de criar um bloco de código com chaves e colocar toda a execução dentro da função Lambda, podemos criar um método com o código e simplesmente chamar o método na função:
-```
+```java
     list.stream()
                 .map((n) -> {
                     return converteParaStringBuilder(n);
@@ -177,8 +177,7 @@ Ao invés de criar um bloco de código com chaves e colocar toda a execução de
                 .forEach(System.out::println);
 ```
 
-```
-
+```java
     private static StringBuilder converteParaStringBuilder(Integer n) {
         StringBuilder builder = new StringBuilder();
         builder.append(n);
@@ -189,7 +188,7 @@ Ao invés de criar um bloco de código com chaves e colocar toda a execução de
 ```
 ### **Método Peek**
 Peek é um método que a interface Stream possui. Ele foi feito com o intuíto de ser utilizado para log e depuração, ao invés de executar uma tarefa mais complexa. Ele pode ser usando entre várias operações.
-```
+```java
 list.stream()
                 .peek(n -> System.out.println(n + " antes da alteração"))
                 .map((n) -> new StringBuilder().append(n).append("s").append("a"))
@@ -202,7 +201,7 @@ Então, se tivermos um Stream com várias funções/operações (filter(), map()
 ## Aula 09 - Interfaces Funcionais
 ### **Supplier**
 Interface funcional que não recebe nenhum argumento e entrega um valor.
-```
+```java
 @FunctionalInterface
 public interface Supplier<T> {
 
@@ -216,7 +215,7 @@ public interface Supplier<T> {
 ```
 
 O seguinte código usa um generate, o qual usa um Supplier:
-```
+```java
 Stream.generate(() -> new Random().nextInt())
                 .limit(7)
                 .forEach(System.out::println);
@@ -224,7 +223,7 @@ Stream.generate(() -> new Random().nextInt())
 
 ### **Consumer**
 Interface funcional que recebe um argumento/valor mas não retorna nada, somente usa o argumento/valor. 
-```
+```java
 @FunctionalInterface
 public interface Consumer<T> {
 
@@ -245,7 +244,7 @@ Semelhante a interface acima, mas com a diferença de que recebe dois argumentos
 
 ### **Predicate**
 Interface funcional que recebe um valor e retorna um booleano, ou seja, retorna o resultado de uma comparação que resulte em true ou false.
-```
+```java
 @FunctionalInterface
 public interface Predicate<T> {
 
@@ -268,7 +267,7 @@ Semelhante a interface acima, mas recebe dois valores e faz um teste com esses d
 
 ### **Function**
 Interface funcional que recebe um valor de um tipo e retorna um valor de outro tipo.
-```
+```java
 @FunctionalInterface
 public interface Function<T, R> {
 
@@ -291,7 +290,7 @@ Semelhante a interface acima, mas recebe dois valores e retorna um valor.
 ### **UnaryOperator**
 Interface que extende a uma Function, semelhante a ela inclusive, entretanto, ao invés de receber um valor de um tipo e retornar outro valor de outro tipo, UnaryOperator recebe um valor de um tipo e retorna um outro valor do mesmo tipo. Ou seja, a entrada e a saída são do mesmo tipo.
 
-```
+```java
 @FunctionalInterface
 public interface UnaryOperator<T> extends Function<T, T> {
 
